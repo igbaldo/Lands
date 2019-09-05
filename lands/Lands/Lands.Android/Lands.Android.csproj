@@ -100,13 +100,13 @@
     <AndroidResource Include="Resources\drawable\onu.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\facebook-logo.png" />
+    <AndroidResource Include="Resources\drawable\facebookLogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\twitter-logo.png" />
+    <AndroidResource Include="Resources\drawable\twitterLogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\instagram-logo.png" />
+    <AndroidResource Include="Resources\drawable\instagramLogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
