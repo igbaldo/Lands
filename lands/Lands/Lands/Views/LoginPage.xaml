@@ -14,49 +14,49 @@
                     Source="onu"
                     WidthRequest="100" />
                 <Grid
-                    VerticalOptions="CenterAndExpand"
-                    Margin="10,20">
+                    Margin="10,20"
+                    VerticalOptions="CenterAndExpand">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="2.7*" />
                     </Grid.ColumnDefinitions>
                     <Label
-                        VerticalOptions="Center"
                         Grid.Row="0"
                         Grid.Column="0"
-                        Text="Email" />
+                        Text="Email" 
+                    VerticalOptions="Center"/>
                     <Entry
                         Grid.Row="0"
                         Grid.Column="1"
                         Keyboard="Email"
-                        Placeholder="Enter your email..."
-                        Text="{Binding Email}"/>
+                        Text="{Binding Email}"
+                        Placeholder="Enter your email..."/>
                     <Label
-                        VerticalOptions="Center"
                         Grid.Row="1"
                         Grid.Column="0"
-                        Text="Password" />
+                        Text="Password" 
+                        VerticalOptions="Center"/>
                     <Entry
                         Grid.Row="1"
                         Grid.Column="1"
                         IsPassword="True"
-                        Placeholder="Enter your password..."
-                        Text="{Binding Password, Mode=TwoWay}"/>
+                        Text="{Binding Password, Mode=TwoWay}"
+                        Placeholder="Enter your password..."/>
                 </Grid>
                 <ActivityIndicator
-                    VerticalOptions="CenterAndExpand"
-                    IsRunning="{Binding IsRunning, Mode=TwoWay}">
+                    IsRunning="{Binding IsRunning, Mode=TwoWay}"
+                    VerticalOptions="CenterAndExpand">
                 </ActivityIndicator>
                 <StackLayout
                     Margin="10,0"
                     Orientation="Horizontal">
                     <Label
                         HorizontalOptions="StartAndExpand"
-                        VerticalOptions="Center"
-                        Text="Rememberme on this device" />
+                        Text="Rememberme on this device" 
+                        VerticalOptions="Center"/>
                     <Switch
-                        IsToggled="{Binding IsRemembered, Mode=TwoWay}"
                         HorizontalOptions="End"
+                        IsToggled="{Binding IsRemembered, Mode=TwoWay}"
                         OnColor="Aquamarine" />
                 </StackLayout>
                 <Label
@@ -65,29 +65,32 @@
                     Text="Forgot your password ?" />
 
                 <StackLayout
+                    Margin="10,0"
                     Orientation="Horizontal"
-                    VerticalOptions="CenterAndExpand"
-                    Margin="10,0">
+                    VerticalOptions="CenterAndExpand">
                     <Button
                         BackgroundColor="Navy"
-                        TextColor="AntiqueWhite"
                         BorderRadius="23"
+                        Command="{Binding LoginCommand}"
                         HeightRequest="46"
                         HorizontalOptions="FillAndExpand"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        TextColor="AntiqueWhite"
                         Text="Login" 
-                        Command="{Binding LoginCommand}"/>
+                        />
                     <Button
                         BackgroundColor="Purple"
-                        TextColor="AntiqueWhite"
-                        HorizontalOptions="FillAndExpand"
                         BorderRadius="23"
+                        HorizontalOptions="FillAndExpand"
                         HeightRequest="46"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        TextColor="AntiqueWhite"
                         Text="Register" />
                 </StackLayout>
 
                 <StackLayout
-                    Orientation="Horizontal"
                     HorizontalOptions="Center"
+                    Orientation="Horizontal"
                     VerticalOptions="EndAndExpand">
                     <Image
                         Source="facebookLogo"
