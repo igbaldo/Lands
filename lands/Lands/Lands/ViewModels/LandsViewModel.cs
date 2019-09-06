@@ -24,7 +24,6 @@ namespace Lands.ViewModels
         private ObservableCollection<LandItemViewModel> lands { get; set; }
         private bool isRefreshing { get; set; }
         private string filter { get; set; }
-        private List<Land> landsList { get; set; }
 
         #endregion
 
@@ -136,7 +135,7 @@ namespace Lands.ViewModels
                 return;
             }
 
-            this.landsList = (List<Land>)response.Result;
+            MainViewModel.GetInstance().LandsList = (List<Land>)response.Result;
             this.Lands = new ObservableCollection<LandItemViewModel>(this.ToLandItemViewModel());
             this.IsRefreshing = false;
         }
@@ -157,7 +156,7 @@ namespace Lands.ViewModels
 
         private IEnumerable<LandItemViewModel> ToLandItemViewModel()
         {
-            return MainViewModel.GetInstance().Lands.landsList.Select(l => new LandItemViewModel
+            return MainViewModel.GetInstance().LandsList.Select(l => new LandItemViewModel
             {
                 Alpha2Code = l.Alpha2Code,
                 Alpha3Code = l.Alpha3Code,
@@ -174,7 +173,7 @@ namespace Lands.ViewModels
                 Languages = l.Languages,
                 Latlng = l.Latlng,
                 Name = l.Name,
-                NativeName = l.NativeName.Trim(),
+                NativeName = l.NativeName,
                 NumericCode = l.NumericCode,
                 Population = l.Population,
                 Region = l.Region,

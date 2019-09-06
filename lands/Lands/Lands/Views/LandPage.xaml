@@ -4,7 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Lands.Views.LandPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             Title="Land">
+             Icon="ic_action_info"
+             Title="General Information">
     <ContentPage.Content>
         <ScrollView
             BindingContext="{Binding Land}">
