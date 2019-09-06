@@ -1,11 +1,18 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using System;
+using GalaSoft.MvvmLight.Command;
 using System.Windows.Input;
+using Lands.Services;
+using Lands.Views;
 using Xamarin.Forms;
 
 namespace Lands.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
+        #region Services
+        private ApiService apiService;
+        #endregion
+
         #region Attributes
 
         private string email { get; set; }
@@ -18,19 +25,26 @@ namespace Lands.ViewModels
 
         #region Properties
 
-        public string Email { get; set; }
+        public string Email {
+            get { return this.email; }
+            set
+            {
+                if (this.email != value)
+                {
+                    this.email = value;
+                    OnPropertyChanged(nameof(Email));
+                }
+
+            }
+        }
 
         public string Password
         {
             get { return this.password; }
             set
             {
-                if (this.password != value)
-                {
-                    this.password = value;
-                    OnPropertyChanged(nameof(Password));
-                }
-
+                this.password = value;
+                OnPropertyChanged(nameof(Password));
             }
         }
 
@@ -38,9 +52,11 @@ namespace Lands.ViewModels
             get { return this.isRunning; }
             set
             {
-                var backingField = this.isRunning;
-                SetValue(ref backingField, value);
-                this.isRunning = backingField;
+                if (this.isRunning != value)
+                {
+                    this.isRunning = value;
+                    OnPropertyChanged(nameof(IsRunning));
+                }
             }
         }
 
@@ -50,9 +66,11 @@ namespace Lands.ViewModels
             get { return this.isEnable; }
             set
             {
-                var backingField = this.isEnable;
-                SetValue(ref backingField, value);
-                this.isEnable = backingField;
+                if (this.isEnable != value)
+                {
+                    this.isEnable = value;
+                    OnPropertyChanged(nameof(IsEnabled));
+                }
             }
         }
 
@@ -62,7 +80,10 @@ namespace Lands.ViewModels
 
         public ICommand LoginCommand
         {
-            get { return new RelayCommand(Login); }
+            get
+            {
+                return new RelayCommand(Login);
+            }
         }
 
         private async void Login()
@@ -92,13 +113,29 @@ namespace Lands.ViewModels
                 return;
             }
 
-            await Application.Current.MainPage.DisplayAlert(
-                "Ok",
-                "Login",
-                "Accept");
+            var connection = await this.apiService.CheckConnection();
+
+            if (!connection.IsSuccess)
+            {
+                this.IsRunning = false;
+                this.IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    connection.Message,
+                    "Accept");
+                return;
+            }
+
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.Lands = new LandsViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new LandsPage());
 
             this.IsRunning = false;
             this.IsEnabled = true;
+
+            this.Email = string.Empty;
+            this.Password = string.Empty;
+
         }
 
         #endregion
@@ -107,8 +144,13 @@ namespace Lands.ViewModels
 
         public LoginViewModel()
         {
+            this.apiService = new ApiService();
+
             this.IsRemembered = true;
             this.IsEnabled = true;
+
+            this.Email = "ig.flytolive@gmail.com";
+            this.Password = "admin";
         }
 
         #endregion
