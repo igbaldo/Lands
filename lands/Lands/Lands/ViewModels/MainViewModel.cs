@@ -13,6 +13,8 @@ namespace Lands.ViewModels
 
         public LandsViewModel Lands { get; set; }
 
+        public LandViewModel Land { get; set; }
+
         #endregion
 
         #region Constructor
