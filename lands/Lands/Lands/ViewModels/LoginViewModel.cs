@@ -1,6 +1,7 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Command;
 using System.Windows.Input;
+using Lands.Models;
 using Lands.Services;
 using Lands.Views;
 using Xamarin.Forms;
@@ -10,7 +11,7 @@ namespace Lands.ViewModels
     public class LoginViewModel : BaseViewModel
     {
         #region Services
-        private ApiService apiService;
+        private readonly ApiService apiService;
         #endregion
 
         #region Attributes
@@ -101,24 +102,14 @@ namespace Lands.ViewModels
             this.IsRunning = true;
             this.IsEnabled = false;
 
-            if (this.Email != "ig.flytolive@gmail.com" || this.Password != "admin")
-            {
-                await Application.Current.MainPage.DisplayAlert(
-                    "Error",
-                    "Email or Password incorrect",
-                    "Accept");
-
-                this.Password = string.Empty;
-
-                return;
-            }
-
+            
             var connection = await this.apiService.CheckConnection();
 
             if (!connection.IsSuccess)
             {
                 this.IsRunning = false;
                 this.IsEnabled = true;
+
                 await Application.Current.MainPage.DisplayAlert(
                     "Error",
                     connection.Message,
@@ -126,7 +117,38 @@ namespace Lands.ViewModels
                 return;
             }
 
+            TokenResponse token = await this.apiService.GetToken("https://landsapi2019.azurewebsites.net", this.Email, this.Password);
+
+            if (token == null)
+            {
+                this.IsRunning = false;
+                this.IsEnabled = true;
+
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    "Something was wrong, please try later.",
+                    "Accept");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(token.AccessToken))
+            {
+                this.IsRunning = false;
+                this.IsEnabled = true;
+
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    token.ErrorDescription,
+                    "Accept");
+
+                this.Password = String.Empty;
+
+                return;
+            }
+
             var mainViewModel = MainViewModel.GetInstance();
+
+            mainViewModel.Token = token;
             mainViewModel.Lands = new LandsViewModel();
             await Application.Current.MainPage.Navigation.PushAsync(new LandsPage());
 
@@ -135,7 +157,6 @@ namespace Lands.ViewModels
 
             this.Email = string.Empty;
             this.Password = string.Empty;
-
         }
 
         #endregion
@@ -149,8 +170,8 @@ namespace Lands.ViewModels
             this.IsRemembered = true;
             this.IsEnabled = true;
 
-            this.Email = "ig.flytolive@gmail.com";
-            this.Password = "admin";
+            this.Email = "admin@admin.com";
+            this.Password = "123456";
         }
 
         #endregion
