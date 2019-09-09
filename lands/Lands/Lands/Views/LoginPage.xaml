@@ -2,9 +2,10 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:i18n="clr-namespace:Lands.Helpers"
              x:Class="Lands.Views.LoginPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             Title="Login">
+             Title="{i18n:Translate LoginTittle}">
     <ContentPage.Content>
         <ScrollView
             BindingContext="{Binding Login}">
@@ -23,25 +24,25 @@
                     <Label
                         Grid.Row="0"
                         Grid.Column="0"
-                        Text="Email" 
+                        Text="{i18n:Translate Email}" 
                     VerticalOptions="Center"/>
                     <Entry
                         Grid.Row="0"
                         Grid.Column="1"
                         Keyboard="Email"
                         Text="{Binding Email}"
-                        Placeholder="Enter your email..."/>
+                        Placeholder="{i18n:Translate EmailPlaceHolder}"/>
                     <Label
                         Grid.Row="1"
                         Grid.Column="0"
-                        Text="Password" 
+                        Text="{i18n:Translate Password}" 
                         VerticalOptions="Center"/>
                     <Entry
                         Grid.Row="1"
                         Grid.Column="1"
                         IsPassword="True"
                         Text="{Binding Password, Mode=TwoWay}"
-                        Placeholder="Enter your password..."/>
+                        Placeholder="{i18n:Translate PasswordPlaceHolder}"/>
                 </Grid>
                 <ActivityIndicator
                     IsRunning="{Binding IsRunning, Mode=TwoWay}"
@@ -49,25 +50,24 @@
                 </ActivityIndicator>
                 <StackLayout
                     Margin="10,0"
-                    Orientation="Horizontal">
+                    Orientation="Horizontal"
+                    VerticalOptions="EndAndExpand">
                     <Label
                         HorizontalOptions="StartAndExpand"
-                        Text="Rememberme on this device" 
+                        Text="{i18n:Translate Remember}" 
                         VerticalOptions="Center"/>
                     <Switch
                         HorizontalOptions="End"
-                        IsToggled="{Binding IsRemembered, Mode=TwoWay}"
-                        OnColor="Aquamarine" />
+                        IsToggled="{Binding IsRemembered, Mode=TwoWay}"/>
                 </StackLayout>
                 <Label
                     HorizontalOptions="Center"
                     TextColor="CornflowerBlue"
-                    Text="Forgot your password ?" />
+                    Text="{i18n:Translate ForgotPassword}" />
 
                 <StackLayout
-                    Margin="10,0"
                     Orientation="Horizontal"
-                    VerticalOptions="CenterAndExpand">
+                    VerticalOptions="End">
                     <Button
                         BackgroundColor="Navy"
                         BorderRadius="23"
@@ -76,7 +76,7 @@
                         HorizontalOptions="FillAndExpand"
                         IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                         TextColor="AntiqueWhite"
-                        Text="Login" 
+                        Text="{i18n:Translate Login}" 
                         />
                     <Button
                         BackgroundColor="Purple"
@@ -85,13 +85,13 @@
                         HeightRequest="46"
                         IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                         TextColor="AntiqueWhite"
-                        Text="Register" />
+                        Text="{i18n:Translate Register}" />
                 </StackLayout>
 
                 <StackLayout
                     HorizontalOptions="Center"
                     Orientation="Horizontal"
-                    VerticalOptions="EndAndExpand">
+                    VerticalOptions="End">
                     <Image
                         Source="facebookLogo"
                         WidthRequest="50">

@@ -11,7 +11,9 @@ namespace Lands.ViewModels
     public class LoginViewModel : BaseViewModel
     {
         #region Services
+
         private readonly ApiService apiService;
+
         #endregion
 
         #region Attributes
@@ -92,9 +94,9 @@ namespace Lands.ViewModels
             if (string.IsNullOrEmpty(this.Email) || string.IsNullOrEmpty(this.Password))
             {
                 await Application.Current.MainPage.DisplayAlert(
-                    "Error",
-                    "You must enter an email or password",
-                    "Accept");
+                    Resources.Resource.Error,
+                    Resources.Resource.EmailOrPasswordValidator,
+                    Resources.Resource.Accept);
 
                 return;
             }
@@ -102,7 +104,6 @@ namespace Lands.ViewModels
             this.IsRunning = true;
             this.IsEnabled = false;
 
-            
             var connection = await this.apiService.CheckConnection();
 
             if (!connection.IsSuccess)
@@ -111,9 +112,9 @@ namespace Lands.ViewModels
                 this.IsEnabled = true;
 
                 await Application.Current.MainPage.DisplayAlert(
-                    "Error",
+                    Resources.Resource.Error,
                     connection.Message,
-                    "Accept");
+                    Resources.Resource.Accept);
                 return;
             }
 
@@ -125,9 +126,9 @@ namespace Lands.ViewModels
                 this.IsEnabled = true;
 
                 await Application.Current.MainPage.DisplayAlert(
-                    "Error",
-                    "Something was wrong, please try later.",
-                    "Accept");
+                    Resources.Resource.Error,
+                    Resources.Resource.SomethingWrong,
+                    Resources.Resource.Accept);
                 return;
             }
 
@@ -137,9 +138,9 @@ namespace Lands.ViewModels
                 this.IsEnabled = true;
 
                 await Application.Current.MainPage.DisplayAlert(
-                    "Error",
+                    Resources.Resource.Error,
                     token.ErrorDescription,
-                    "Accept");
+                    Resources.Resource.Accept);
 
                 this.Password = String.Empty;
 
