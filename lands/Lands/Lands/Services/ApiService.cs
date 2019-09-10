@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Lands.Domain;
 using Lands.Models;
 using Newtonsoft.Json;
 using Plugin.Connectivity;
