@@ -78,6 +78,11 @@ namespace Lands.Helpers
             get { return Resource.Password; }
         }
 
+        public static string Menu
+        {
+            get { return Resource.Menu; }
+        }
+
 
     }
 }

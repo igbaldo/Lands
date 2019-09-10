@@ -4,10 +4,18 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+
 namespace Lands
 {
     public partial class App : Application
     {
+        #region Properties
+
+        public static NavigationPage Navigator { get; set; }
+        public static MasterPage Master { get; set; }
+
+        #endregion
+
         #region Constructor
 
         public App()
@@ -34,7 +42,7 @@ namespace Lands
         protected override void OnResume()
         {
             // Handle when your app resumes
-        }        
+        }
 
         #endregion
     }
