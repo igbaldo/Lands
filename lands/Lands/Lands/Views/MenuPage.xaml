@@ -1,12 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Lands.Views.MenuPage">
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    
+    xmlns:i18n="clr-namespace:Lands.Helpers"
+    x:Class="Lands.Views.MenuPage"
+    BindingContext="{Binding Main, Source={StaticResource Locator}}"
+    BackgroundColor="LightSkyBlue"
+    Icon="ic_action_menu"
+    Title="{i18n:Translate Menu}">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Menu"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout
+            Padding="5,20,5,5">
+            <Label
+                FontSize="Large"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Text="Menu page"
+                TextColor="Black">
+            </Label>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

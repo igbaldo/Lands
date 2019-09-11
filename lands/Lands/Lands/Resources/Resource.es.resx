@@ -141,8 +141,14 @@
   <data name="LoginTittle" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Cerrar sessión</value>
+  </data>
   <data name="Menu" xml:space="preserve">
     <value>Menú</value>
+  </data>
+  <data name="MyProfile" xml:space="preserve">
+    <value>Mi perfil</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Contraseña</value>
@@ -158,5 +164,8 @@
   </data>
   <data name="SomethingWrong" xml:space="preserve">
     <value>Algo ha salido mal, intente más tarde.</value>
+  </data>
+  <data name="Statics" xml:space="preserve">
+    <value>Estadisticas</value>
   </data>
 </root>

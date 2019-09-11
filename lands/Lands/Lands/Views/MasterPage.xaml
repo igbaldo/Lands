@@ -1,13 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
-<MasterDetailPage
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage 
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:i18n="clr-namespace:Lands.Helpers"
-    x:Class="Lands.Views.MasterPage"
     xmlns:pages="clr-namespace:Lands.Views"
-    BindingContext="{Binding Main, Source={StaticResource Locator}}"
-    Title="{i18n:Translate Menu}">
+    x:Class="Lands.Views.MasterPage">
     <MasterDetailPage.Master>
         <pages:MenuPage/>
     </MasterDetailPage.Master>
@@ -19,5 +15,4 @@
             </x:Arguments>
         </NavigationPage>
     </MasterDetailPage.Detail>
-
 </MasterDetailPage>

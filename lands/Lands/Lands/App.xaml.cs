@@ -16,13 +16,14 @@ namespace Lands
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public App()
         {
             InitializeComponent();
 
-            this.MainPage = new NavigationPage(new LoginPage());
+            this.MainPage = new MasterPage();
+            //this.MainPage = new NavigationPage(new LoginPage());
         }
 
         #endregion
