@@ -34,7 +34,7 @@ namespace Lands.Domain
         [DataType(DataType.PhoneNumber)]
         public string Telephone { get; set; }
 
-        public int? UserTypeId { get; set; }
+        public int UserTypeId { get; set; }
 
         [JsonIgnore]
         public virtual UserType UserType { get; set; }
