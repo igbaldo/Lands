@@ -67,5 +67,11 @@ namespace Lands.Domain
             }
         }
 
+        [NotMapped]
+        public byte[] ImageArray { get; set; }
+
+        [NotMapped]
+        public string Password { get; set; }
+
     }
 }

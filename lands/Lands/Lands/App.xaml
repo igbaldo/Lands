@@ -6,7 +6,13 @@
     <Application.Resources>
 
         <ResourceDictionary>
+
             <infra:InstanceLocator x:Key="Locator"></infra:InstanceLocator>
+
+            <!-- Parameters -->
+            <x:String x:Key="APILands">http://restcountries.eu</x:String>
+            <x:String x:Key="APISecurity">https://landsapi2019.azurewebsites.net</x:String>
+
         </ResourceDictionary>
 
     </Application.Resources>

@@ -29,6 +29,8 @@ namespace Lands.ViewModels
 
         public LandViewModel Land { get; set; }
 
+        public RegisterViewModel Register { get; set; }
+
         #endregion
 
         #region Constructor
@@ -49,7 +51,7 @@ namespace Lands.ViewModels
         {
             this.Menus = new ObservableCollection<MenuItemViewModel>();
 
-            this.Menus.Add( new MenuItemViewModel()
+            this.Menus.Add(new MenuItemViewModel()
             {
                 Icon = "ic_settings",
                 PageName = "MyProfilePage",

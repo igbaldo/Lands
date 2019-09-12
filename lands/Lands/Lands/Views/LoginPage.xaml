@@ -5,7 +5,7 @@
              xmlns:i18n="clr-namespace:Lands.Helpers"
              x:Class="Lands.Views.LoginPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             Title="{i18n:Translate LoginTittle}">
+             Title="{i18n:Translate Login}">
     <ContentPage.Content>
         <ScrollView
             BindingContext="{Binding Login}">
@@ -24,7 +24,7 @@
                     <Label
                         Grid.Row="0"
                         Grid.Column="0"
-                        Text="{i18n:Translate Email}" 
+                        Text="{i18n:Translate EMail}" 
                     VerticalOptions="Center"/>
                     <Entry
                         Grid.Row="0"
@@ -50,7 +50,7 @@
                     VerticalOptions="StartAndExpand">
                     <Label
                         HorizontalOptions="StartAndExpand"
-                        Text="{i18n:Translate Remember}" 
+                        Text="{i18n:Translate Rememberme}" 
                         VerticalOptions="Center"/>
                     <Switch
                         HorizontalOptions="End"
@@ -66,7 +66,7 @@
                     Margin="10"
                     HorizontalOptions="Center"
                     TextColor="CornflowerBlue"
-                    Text="{i18n:Translate ForgotPassword}" />
+                    Text="{i18n:Translate Forgot}" />
 
                 <StackLayout
                     Orientation="Horizontal"
@@ -84,6 +84,7 @@
                     <Button
                         BackgroundColor="Purple"
                         BorderRadius="23"
+                        Command="{Binding RegisterCommand}"
                         HorizontalOptions="FillAndExpand"
                         HeightRequest="46"
                         IsEnabled="{Binding IsEnabled, Mode=TwoWay}"

@@ -90,6 +90,36 @@ namespace Lands.ViewModels
             }
         }
 
+        public ICommand RegisterCommand
+        {
+            get
+            {
+                return new RelayCommand(Register);
+            }
+        }
+
+        #endregion
+
+        #region Constructor
+
+        public LoginViewModel()
+        {
+            this.apiService = new ApiService();
+
+            this.IsRemembered = true;
+            this.IsEnabled = true;
+        }
+
+        #endregion
+
+        #region Methods
+
+        private async void Register()
+        {
+            MainViewModel.GetInstance().Register = new RegisterViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new RegisterPage());
+        }
+
         private async void Login()
         {
             if (string.IsNullOrEmpty(this.Email) || string.IsNullOrEmpty(this.Password))
@@ -119,7 +149,7 @@ namespace Lands.ViewModels
                 return;
             }
 
-            TokenResponse token = await this.apiService.GetToken("https://landsapi2019.azurewebsites.net", this.Email, this.Password);
+            TokenResponse token = await this.apiService.GetToken(Application.Current.Resources["APISecurity"].ToString(), this.Email, this.Password);
 
             if (token == null)
             {
@@ -158,7 +188,7 @@ namespace Lands.ViewModels
                 Settings.Token = token.AccessToken;
                 Settings.TokenType = token.TokenType;
             }
-            
+
             mainViewModel.Lands = new LandsViewModel();
             Application.Current.MainPage = new MasterPage();
 
@@ -167,18 +197,6 @@ namespace Lands.ViewModels
 
             this.Email = string.Empty;
             this.Password = string.Empty;
-        }
-
-        #endregion
-
-        #region Constructor
-
-        public LoginViewModel()
-        {
-            this.apiService = new ApiService();
-
-            this.IsRemembered = true;
-            this.IsEnabled = true;
         }
 
         #endregion
