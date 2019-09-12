@@ -13,7 +13,9 @@ namespace Lands.ViewModels
 
         public List<Land> LandsList { get; set; }
 
-        public TokenResponse Token { get; set; }
+        public string Token { get; set; }
+
+        public string TokenType { get; set; }
 
         public ObservableCollection<MenuItemViewModel> Menus { get; set; }
 
