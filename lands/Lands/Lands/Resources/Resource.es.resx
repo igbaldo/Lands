@@ -139,7 +139,7 @@
     <value>Algo anda mal con los servicios, por favor intenta más tarde.</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value>Ingresar</value>
+    <value>   Ingresar   </value>
   </data>
   <data name="EMail" xml:space="preserve">
     <value>E-Mail</value>
