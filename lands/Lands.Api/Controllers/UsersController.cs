@@ -12,6 +12,7 @@ using Lands.Domain;
 
 namespace Lands.Api.Controllers
 {
+    [RoutePrefix("api/Users")]
     public class UsersController : ApiController
     {
         private DataContext db = new DataContext();
@@ -33,6 +34,22 @@ namespace Lands.Api.Controllers
             }
 
             return Ok(user);
+        }
+        
+        [HttpPost]
+        [ResponseType(typeof(void))]
+        [Route("GetUserByEmail")]
+        public async Task<IHttpActionResult> GetUserByEmail(User user)
+        {
+            var response = await db.Users.
+                Where(u => u.Email.ToLower() == user.Email.ToLower()).
+                FirstOrDefaultAsync();
+            if (response == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(response);
         }
 
         // PUT: api/Users/5
