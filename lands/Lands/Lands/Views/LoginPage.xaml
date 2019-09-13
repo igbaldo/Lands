@@ -89,7 +89,8 @@
                         HeightRequest="46"
                         IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                         TextColor="AntiqueWhite"
-                        Text="{i18n:Translate Register}" />
+                        Text="{i18n:Translate Register}"
+                        />
                 </StackLayout>
 
                 <StackLayout

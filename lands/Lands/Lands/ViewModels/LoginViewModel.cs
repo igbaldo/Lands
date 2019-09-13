@@ -1,6 +1,7 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Command;
 using System.Windows.Input;
+using Lands.Domain;
 using Lands.Helpers;
 using Lands.Models;
 using Lands.Services;
@@ -149,7 +150,9 @@ namespace Lands.ViewModels
                 return;
             }
 
-            TokenResponse token = await this.apiService.GetToken(Application.Current.Resources["APISecurity"].ToString(), this.Email, this.Password);
+            var apiSecurity = Application.Current.Resources["APISecurity"].ToString();
+
+            TokenResponse token = await this.apiService.GetToken(apiSecurity, this.Email, this.Password);
 
             if (token == null)
             {
@@ -178,10 +181,13 @@ namespace Lands.ViewModels
                 return;
             }
 
+            User user = await this.apiService.GetUserByEmail(apiSecurity, "/api", "/users/GetUserByEmail", this.Email);
+
             var mainViewModel = MainViewModel.GetInstance();
 
             mainViewModel.Token = token.AccessToken;
             mainViewModel.TokenType = token.TokenType;
+            mainViewModel.User = user;
 
             if (this.IsRemembered)
             {

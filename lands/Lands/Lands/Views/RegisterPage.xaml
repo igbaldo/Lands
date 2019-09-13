@@ -122,9 +122,6 @@
                         Text="{Binding Confirm, Mode=TwoWay}">
                     </Entry>
                 </Grid>
-                <ActivityIndicator
-                    IsRunning="{Binding IsRunning, Mode=TwoWay}">
-                </ActivityIndicator>
                 <Button 
                     BackgroundColor="Navy" 
                     BorderRadius="23" 
