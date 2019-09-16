@@ -26,6 +26,8 @@ namespace Lands.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.ApplicationName = global::Lands.Droid.Resource.String.ApplicationName;
+			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.Hello = global::Lands.Droid.Resource.String.Hello;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.abc_fade_in = global::Lands.Droid.Resource.Animation.abc_fade_in;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.abc_fade_out = global::Lands.Droid.Resource.Animation.abc_fade_out;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.abc_grow_fade_in_from_bottom = global::Lands.Droid.Resource.Animation.abc_grow_fade_in_from_bottom;
@@ -6051,6 +6053,12 @@ namespace Lands.Droid
 		
 		public partial class String
 		{
+			
+			// aapt resource value: 0x7f0c003d
+			public const int ApplicationName = 2131492925;
+			
+			// aapt resource value: 0x7f0c003c
+			public const int Hello = 2131492924;
 			
 			// aapt resource value: 0x7f0c0015
 			public const int abc_action_bar_home_description = 2131492885;

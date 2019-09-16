@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Lands.Helpers;
+using Lands.Models;
 using Lands.Views;
 using Xamarin.Forms;
 

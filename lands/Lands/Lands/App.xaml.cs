@@ -1,12 +1,13 @@
 ﻿using System;
 using Lands.Helpers;
+using Lands.Models;
+using Lands.Services;
 using Lands.ViewModels;
 using Lands.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
-
 namespace Lands
 {
     public partial class App : Application
@@ -27,14 +28,16 @@ namespace Lands
             if (string.IsNullOrEmpty(Settings.Token))
             {
                 this.MainPage = new NavigationPage(new LoginPage());
-
             }
             else
             {
+                var dataServices = new DataService();
+                var userLocal = dataServices.First<UserLocal>(false);
                 var mainViewModel = MainViewModel.GetInstance();
 
                 mainViewModel.Token = Settings.Token;
                 mainViewModel.TokenType = Settings.TokenType;
+                mainViewModel.User = userLocal;
 
                 mainViewModel.Lands = new LandsViewModel();
                 this.MainPage = new MasterPage();

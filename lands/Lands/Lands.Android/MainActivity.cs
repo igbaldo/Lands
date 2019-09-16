@@ -25,5 +25,6 @@ namespace Lands.Droid
         {
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
     }
 }

@@ -20,7 +20,7 @@ namespace Lands.ViewModels
 
         public ObservableCollection<MenuItemViewModel> Menus { get; set; }
 
-        public User User { get; set; }
+        public UserLocal User { get; set; }
 
         #endregion
 

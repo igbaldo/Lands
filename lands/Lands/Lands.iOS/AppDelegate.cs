@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FFImageLoading.Forms.Platform;
 using Foundation;
@@ -30,5 +31,6 @@ namespace Lands.iOS
 
             return base.FinishedLaunching(app, options);
         }
+
     }
 }
