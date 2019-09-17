@@ -174,7 +174,7 @@ namespace Lands.ViewModels
 
                 await Application.Current.MainPage.DisplayAlert(
                     Resources.Resource.Error,
-                    token.ErrorDescription,
+                    Helpers.Languages.LoginError,
                     Resources.Resource.Accept);
 
                 this.Password = String.Empty;
@@ -190,23 +190,23 @@ namespace Lands.ViewModels
                 this.Email);
 
             var userLocal = Converter.ToUserLocal(user);
+            userLocal.Password = this.Password;
+
             var mainViewModel = MainViewModel.GetInstance();
 
-            mainViewModel.Token = token.AccessToken;
-            mainViewModel.TokenType = token.TokenType;
+            mainViewModel.Token = token;
             mainViewModel.User = userLocal;
 
-            if (this.IsRemembered)
-            {
-                Settings.Token = token.AccessToken;
-                Settings.TokenType = token.TokenType;
+            Settings.IsRemembered = this.IsRemembered ? "true" : "false";
 
-                //Save Local User in SQLite
-                using (var conn = new SQLite.SQLiteConnection(App.root_db))
-                {
-                    conn.CreateTable<UserLocal>();
-                    conn.Insert(userLocal);
-                }
+            //Save Local User in SQLite
+            using (var conn = new SQLite.SQLiteConnection(App.root_db))
+            {
+                conn.CreateTable<UserLocal>();
+                conn.CreateTable<TokenResponse>();
+
+                conn.Insert(token);
+                conn.Insert(userLocal);
             }
 
             mainViewModel.Lands = new LandsViewModel();

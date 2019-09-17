@@ -8,6 +8,7 @@ using Lands.Domain;
 using Lands.Helpers;
 using Lands.Models;
 using Lands.Services;
+using Lands.Views;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Xamarin.Forms;
@@ -17,7 +18,9 @@ namespace Lands.ViewModels
     public class MyProfileViewModel : BaseViewModel
     {
         #region Services
+
         private ApiService apiService;
+
         #endregion
 
         #region Attributes
@@ -98,6 +101,13 @@ namespace Lands.ViewModels
             }
         }
 
+        public ICommand ChangePasswordCommand
+        {
+            get
+            {
+                return new RelayCommand(ChangePassword);
+            }
+        }
 
         public ICommand ChangeImageCommand
         {
@@ -106,7 +116,6 @@ namespace Lands.ViewModels
                 return new RelayCommand(ChangeImage);
             }
         }
-
 
         #endregion
 
@@ -187,8 +196,8 @@ namespace Lands.ViewModels
                 apiSecurity,
                 "/api",
                 "/Users",
-                MainViewModel.GetInstance().TokenType,
-                MainViewModel.GetInstance().Token,
+                MainViewModel.GetInstance().Token.TokenType,
+                MainViewModel.GetInstance().Token.AccessToken,
                 userDomain);
 
             if (!response.IsSuccess)
@@ -205,8 +214,8 @@ namespace Lands.ViewModels
             User user = await this.apiService.GetUserByEmail(apiSecurity,
                 "/api",
                 "/users/GetUserByEmail",
-                MainViewModel.GetInstance().TokenType,
-                MainViewModel.GetInstance().Token,
+                MainViewModel.GetInstance().Token.TokenType,
+                MainViewModel.GetInstance().Token.AccessToken,
                 this.User.Email);
 
             var userLocal = Converter.ToUserLocal(user);
@@ -273,6 +282,13 @@ namespace Lands.ViewModels
                     return stream;
                 });
             }
+        }
+
+        private async void ChangePassword()
+        {
+            MainViewModel.GetInstance().ChangePassword = new ChangePasswordViewModel();
+
+            await App.Navigator.PushAsync(new ChangePasswordPage());
         }
 
         #endregion

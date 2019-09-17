@@ -21,7 +21,7 @@ namespace Lands.Services
                     return new Response
                     {
                         IsSuccess = false,
-                        Message = "Please turn on your internet settings.",
+                        Message = Helpers.Languages.ConnectionError1,
                     };
                 }
 
@@ -33,14 +33,13 @@ namespace Lands.Services
                     return new Response
                     {
                         IsSuccess = false,
-                        Message = "Check you internet connection.",
+                        Message = Helpers.Languages.ConnectionError2,
                     };
                 }
 
                 return new Response
                 {
                     IsSuccess = true,
-                    Message = "Ok",
                 };
             }
 

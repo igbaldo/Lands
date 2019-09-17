@@ -12,16 +12,15 @@ namespace Lands.ViewModels
     {
         #region Attributtes
 
-        public UserLocal user { get; set; }
+        private UserLocal user { get; set; }
 
         #endregion
+
         #region Properties
 
         public List<Land> LandsList { get; set; }
 
-        public string Token { get; set; }
-
-        public string TokenType { get; set; }
+        public TokenResponse Token { get; set; }
 
         public ObservableCollection<MenuItemViewModel> Menus { get; set; }
 
@@ -51,6 +50,8 @@ namespace Lands.ViewModels
         public RegisterViewModel Register { get; set; }
 
         public MyProfileViewModel MyProfile { get; set; }
+
+        public ChangePasswordViewModel ChangePassword { get; set; }
 
         #endregion
 

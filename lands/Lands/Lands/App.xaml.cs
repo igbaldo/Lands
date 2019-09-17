@@ -40,8 +40,8 @@ namespace Lands
                 {
                     var mainViewModel = MainViewModel.GetInstance();
 
-                    mainViewModel.Token = Settings.Token;
-                    mainViewModel.TokenType = Settings.TokenType;
+                    mainViewModel.Token.AccessToken = Settings.Token;
+                    mainViewModel.Token.TokenType = Settings.TokenType;
 
                     mainViewModel.Lands = new LandsViewModel();
                     this.MainPage = new MasterPage();
@@ -62,29 +62,38 @@ namespace Lands
             //Set root SQLite
             root_db = root_DB;
             
-            if (string.IsNullOrEmpty(Settings.Token))
+            if (Settings.IsRemembered == "true")
             {
-                this.MainPage = new NavigationPage(new LoginPage());
-            }
-            else
-            {
-                var user = new UserLocal();
+                UserLocal user;
+                TokenResponse token;
 
                 using (var conn = new SQLite.SQLiteConnection(App.root_db))
                 {
                     conn.CreateTable<UserLocal>();
+                    conn.CreateTable<TokenResponse>();
+
                     user = conn.Table<UserLocal>().FirstOrDefault();
+                    token = conn.Table<TokenResponse>().FirstOrDefault();
                 }
 
-                var mainViewModel = MainViewModel.GetInstance();
-                mainViewModel.Token = Settings.Token;
-                mainViewModel.TokenType = Settings.TokenType;
+                if (token != null && token.Expires > DateTime.Now)
+                {
+                    var mainViewModel = MainViewModel.GetInstance();
 
-                mainViewModel.Lands = new LandsViewModel();
-                this.MainPage = new MasterPage();
+                    mainViewModel.User = user;//sqlite
+                    mainViewModel.Token = token;
 
-                mainViewModel.User = user;//sqlite
-                this.MainPage = new MasterPage();
+                    mainViewModel.Lands = new LandsViewModel();
+                    Application.Current.MainPage = new MasterPage();
+                }
+                else
+                {
+                    this.MainPage = new NavigationPage(new LoginPage());
+                }
+            }
+            else
+            {
+                this.MainPage = new NavigationPage(new LoginPage());
             }
         }
 
