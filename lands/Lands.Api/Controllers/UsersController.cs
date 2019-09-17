@@ -37,6 +37,7 @@ namespace Lands.Api.Controllers
         }
         
         [HttpPost]
+        [Authorize]
         [ResponseType(typeof(void))]
         [Route("GetUserByEmail")]
         public async Task<IHttpActionResult> GetUserByEmail(User user)
@@ -54,16 +55,22 @@ namespace Lands.Api.Controllers
 
         // PUT: api/Users/5
         [ResponseType(typeof(void))]
+        [Authorize]
         public async Task<IHttpActionResult> PutUser(int id, User user)
         {
-            if (!ModelState.IsValid)
+            if (user.ImageArray != null && user.ImageArray.Length > 0)
             {
-                return BadRequest(ModelState);
-            }
+                var stream = new MemoryStream(user.ImageArray);
+                var guid = Guid.NewGuid().ToString();
+                var file = string.Format("{0}.jpg", guid);
+                var folder = "~/Content/Images";
+                var fullPath = string.Format("{0}/{1}", folder, file);
+                var response = FilesHelper.UploadPhoto(stream, folder, file);
 
-            if (id != user.UserId)
-            {
-                return BadRequest();
+                if (response)
+                {
+                    user.ImagePath = fullPath;
+                }
             }
 
             db.Entry(user).State = EntityState.Modified;
@@ -84,7 +91,7 @@ namespace Lands.Api.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(user);
         }
 
         // POST: api/Users
