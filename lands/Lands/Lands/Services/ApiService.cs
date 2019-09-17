@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -443,7 +444,9 @@ namespace Lands.Services
             public async Task<User> GetUserByEmail(
                 string urlBase,
                 string servicePrefix,
-                string controller,
+                string controller, 
+                string tokenType,
+                string accessToken,
                 string email)
             {
                 try
@@ -459,6 +462,8 @@ namespace Lands.Services
                         Encoding.UTF8,
                         "application/json");
                     var client = new HttpClient();
+                    client.DefaultRequestHeaders.Authorization =
+                        new AuthenticationHeaderValue(tokenType, accessToken);
                     client.BaseAddress = new Uri(urlBase);
                     var url = string.Format("{0}{1}", servicePrefix, controller);
                     var response = await client.PostAsync(url, content);

@@ -1,4 +1,8 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
+using Android;
+using Android.Content;
+using Android.Content.PM;
 using GalaSoft.MvvmLight.Command;
 using Lands.Domain;
 using Lands.Helpers;
@@ -75,6 +79,7 @@ namespace Lands.ViewModels
 
         public MyProfileViewModel()
         {
+            this.apiService = new ApiService();
             this.User = MainViewModel.GetInstance().User;
             this.ImageSource = this.User.ImageFullPath;
             this.IsEnabled = true;
@@ -92,6 +97,20 @@ namespace Lands.ViewModels
                 return new RelayCommand(Save);
             }
         }
+
+
+        public ICommand ChangeImageCommand
+        {
+            get
+            {
+                return new RelayCommand(ChangeImage);
+            }
+        }
+
+
+        #endregion
+
+        #region Private Methods
 
         private async void Save()
         {
@@ -163,6 +182,7 @@ namespace Lands.ViewModels
             var userDomain = Converter.ToUserDomain(this.User, imageArray);
 
             var apiSecurity = Application.Current.Resources["APISecurity"].ToString();
+
             var response = await this.apiService.Put(
                 apiSecurity,
                 "/api",
@@ -182,24 +202,27 @@ namespace Lands.ViewModels
                 return;
             }
 
+            User user = await this.apiService.GetUserByEmail(apiSecurity,
+                "/api",
+                "/users/GetUserByEmail",
+                MainViewModel.GetInstance().TokenType,
+                MainViewModel.GetInstance().Token,
+                this.User.Email);
+
+            var userLocal = Converter.ToUserLocal(user);
+
+            MainViewModel.GetInstance().User = userLocal;
+
+            using (var conn = new SQLite.SQLiteConnection(App.root_db))
+            {
+                conn.Update(userLocal);
+            }
+            
             this.IsRunning = false;
             this.IsEnabled = true;
 
             await App.Navigator.PopAsync();
         }
-
-        public ICommand ChangeImageCommand
-        {
-            get
-            {
-                return new RelayCommand(ChangeImage);
-            }
-        }
-
-
-        #endregion
-
-        #region Private Methods
 
         private async void ChangeImage()
         {

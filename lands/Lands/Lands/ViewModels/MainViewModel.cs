@@ -8,8 +8,13 @@ using Lands.Models;
 
 namespace Lands.ViewModels
 {
-    public class MainViewModel
+    public class MainViewModel : BaseViewModel
     {
+        #region Attributtes
+
+        public UserLocal user { get; set; }
+
+        #endregion
         #region Properties
 
         public List<Land> LandsList { get; set; }
@@ -20,7 +25,18 @@ namespace Lands.ViewModels
 
         public ObservableCollection<MenuItemViewModel> Menus { get; set; }
 
-        public UserLocal User { get; set; }
+        public UserLocal User
+        {
+            get { return this.user; }
+            set
+            {
+                if (this.user != value)
+                {
+                    this.user = value;
+                    OnPropertyChanged(nameof(this.User));
+                }
+            }
+        }
 
         #endregion
 

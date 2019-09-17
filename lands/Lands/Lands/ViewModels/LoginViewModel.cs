@@ -15,7 +15,6 @@ namespace Lands.ViewModels
         #region Services
 
         private readonly ApiService apiService;
-        //private readonly DataService dataService;
 
         #endregion
 
@@ -183,7 +182,12 @@ namespace Lands.ViewModels
                 return;
             }
 
-            User user = await this.apiService.GetUserByEmail(apiSecurity, "/api", "/users/GetUserByEmail", this.Email);
+            User user = await this.apiService.GetUserByEmail(apiSecurity, 
+                "/api", 
+                "/users/GetUserByEmail",
+                token.TokenType,
+                token.AccessToken,
+                this.Email);
 
             var userLocal = Converter.ToUserLocal(user);
             var mainViewModel = MainViewModel.GetInstance();
