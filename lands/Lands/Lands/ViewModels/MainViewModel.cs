@@ -34,6 +34,8 @@ namespace Lands.ViewModels
 
         public RegisterViewModel Register { get; set; }
 
+        public MyProfileViewModel MyProfile { get; set; }
+
         #endregion
 
         #region Constructor

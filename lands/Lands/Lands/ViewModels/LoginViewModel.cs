@@ -203,7 +203,6 @@ namespace Lands.ViewModels
                     conn.CreateTable<UserLocal>();
                     conn.Insert(userLocal);
                 }
-                
             }
 
             mainViewModel.Lands = new LandsViewModel();
