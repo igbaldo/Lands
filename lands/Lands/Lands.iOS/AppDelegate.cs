@@ -32,5 +32,16 @@ namespace Lands.iOS
             return base.FinishedLaunching(app, options);
         }
 
+        public AppDelegate()
+        {
+            //Set DB root
+            string dbName = "TUAPP.db3";
+            string dbBinder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "..", "Library", "Databases");
+            string dbRoot = Path.Combine(dbBinder, dbName);
+
+            //Inicialized builder
+            LoadApplication(new App(dbRoot));
+        }
+
     }
 }

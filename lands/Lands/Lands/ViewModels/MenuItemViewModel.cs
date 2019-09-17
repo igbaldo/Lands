@@ -44,6 +44,11 @@ namespace Lands.ViewModels
                 mainViewModel.Token = string.Empty;
                 mainViewModel.TokenType = string.Empty;
 
+                using (var conn = new SQLite.SQLiteConnection(App.root_db))
+                {
+                    conn.DeleteAll<UserLocal>();
+                }
+
                 Application.Current.MainPage = new NavigationPage(new LoginPage());
             }
         }

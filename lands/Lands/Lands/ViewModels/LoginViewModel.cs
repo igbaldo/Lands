@@ -15,7 +15,7 @@ namespace Lands.ViewModels
         #region Services
 
         private readonly ApiService apiService;
-        private readonly DataService dataService;
+        //private readonly DataService dataService;
 
         #endregion
 
@@ -107,7 +107,7 @@ namespace Lands.ViewModels
         public LoginViewModel()
         {
             this.apiService = new ApiService();
-            this.dataService = new DataService();
+            //this.dataService = new DataService();
 
             this.IsRemembered = true;
             this.IsEnabled = true;
@@ -197,7 +197,13 @@ namespace Lands.ViewModels
                 Settings.Token = token.AccessToken;
                 Settings.TokenType = token.TokenType;
 
-                this.dataService.DeleteAllAndInsert(userLocal);
+                //Save Local User in SQLite
+                using (var conn = new SQLite.SQLiteConnection(App.root_db))
+                {
+                    conn.CreateTable<UserLocal>();
+                    conn.Insert(userLocal);
+                }
+                
             }
 
             mainViewModel.Lands = new LandsViewModel();

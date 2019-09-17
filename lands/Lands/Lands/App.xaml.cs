@@ -1,7 +1,6 @@
 ﻿using System;
 using Lands.Helpers;
 using Lands.Models;
-using Lands.Services;
 using Lands.ViewModels;
 using Lands.Views;
 using Xamarin.Forms;
@@ -19,31 +18,72 @@ namespace Lands
 
         #endregion
 
+        #region Variables
+
+        public static string root_db;
+        
+        #endregion
+
         #region Constructors
 
         public App()
         {
+            try
+            {
+                InitializeComponent();
+
+                if (string.IsNullOrEmpty(Settings.Token))
+                {
+                    this.MainPage = new NavigationPage(new LoginPage());
+                }
+                else
+                {
+                    var mainViewModel = MainViewModel.GetInstance();
+
+                    mainViewModel.Token = Settings.Token;
+                    mainViewModel.TokenType = Settings.TokenType;
+
+                    mainViewModel.Lands = new LandsViewModel();
+                    this.MainPage = new MasterPage();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+        }
+
+        public App(string root_DB)
+        {
             InitializeComponent();
 
+            //Set root SQLite
+            root_db = root_DB;
+            
             if (string.IsNullOrEmpty(Settings.Token))
             {
                 this.MainPage = new NavigationPage(new LoginPage());
             }
             else
             {
-                var dataServices = new DataService();
-                var userLocal = dataServices.First<UserLocal>(false);
-                var mainViewModel = MainViewModel.GetInstance();
+                var user = new UserLocal();
 
+                using (var conn = new SQLite.SQLiteConnection(App.root_db))
+                {
+                    conn.CreateTable<UserLocal>();
+                    user = conn.Table<UserLocal>().FirstOrDefault();
+                }
+
+                var mainViewModel = MainViewModel.GetInstance();
                 mainViewModel.Token = Settings.Token;
                 mainViewModel.TokenType = Settings.TokenType;
-                mainViewModel.User = userLocal;
 
-                mainViewModel.Lands = new LandsViewModel();
+                mainViewModel.User = user;//sqlite
                 this.MainPage = new MasterPage();
             }
         }
-
         #endregion
 
         #region Methods
