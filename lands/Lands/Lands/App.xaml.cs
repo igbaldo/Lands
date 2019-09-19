@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Lands.Helpers;
 using Lands.Models;
+using Lands.Services;
 using Lands.ViewModels;
 using Lands.Views;
 using Xamarin.Forms;
@@ -114,6 +116,83 @@ namespace Lands
         protected override void OnResume()
         {
             // Handle when your app resumes
+        }
+
+
+        #endregion
+
+        #region Public Methods
+
+
+        public static Action HideLoginView
+        {
+            get
+            {
+                return new Action(() => Application.Current.MainPage =
+                    new NavigationPage(new LoginPage()));
+            }
+        }
+
+        public static async Task NavigateToProfile(Models.FacebookResponse profile)
+        {
+            if (profile == null)
+            {
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
+                return;
+            }
+
+            var apiService = new ApiService();
+
+            var apiSecurity = Application.Current.Resources["APISecurity"].ToString();
+            var token = await apiService.LoginFacebook(
+                apiSecurity,
+                "/api",
+                "/Users/LoginFacebook",
+                profile);
+
+            if (token == null)
+            {
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
+                return;
+            }
+
+            var user = await apiService.GetUserByEmail(
+                apiSecurity,
+                "/api",
+                "/Users/GetUserByEmail",
+                token.TokenType,
+                token.AccessToken,
+                token.UserName);
+
+            UserLocal userLocal = null;
+
+            if (user != null)
+            {
+                userLocal = Converter.ToUserLocal(user);
+
+                //Save Local User in SQLite
+                using (var conn = new SQLite.SQLiteConnection(App.root_db))
+                {
+                    conn.CreateTable<UserLocal>();
+                    conn.CreateTable<TokenResponse>();
+
+                    conn.Insert(token);
+                    conn.Insert(userLocal);
+                }
+
+            }
+
+            var mainViewModel = MainViewModel.GetInstance();
+
+            mainViewModel.Token = token;
+            mainViewModel.User = userLocal;
+
+            mainViewModel.Lands = new LandsViewModel();
+            Application.Current.MainPage = new MasterPage();
+            Settings.IsRemembered = "true";
+
+            mainViewModel.Lands = new LandsViewModel();
+            Application.Current.MainPage = new MasterPage();
         }
 
         #endregion

@@ -31,9 +31,14 @@ namespace Lands.Models
                     return "noimage";
                 }
 
-                return string.Format(
-                    "http://landsapi2019.azurewebsites.net/{0}",
-                    ImagePath.Substring(1));
+                if (this.UserTypeId == 1)
+                {
+                    return string.Format(
+                        "http://landsapi2019.azurewebsites.net/{0}",
+                        ImagePath.Substring(1));
+                }
+
+                return ImagePath;
             }
         }
 

@@ -23,7 +23,6 @@ namespace Lands.ViewModels
         private string email { get; set; }
         private string password { get; set; }
         private bool isRunning { get; set; }
-        private bool isRemembered { get; set; }
         private bool isEnable { get; set; }
 
         #endregion
@@ -96,6 +95,14 @@ namespace Lands.ViewModels
             get
             {
                 return new RelayCommand(Register);
+            }
+        }
+
+        public ICommand LoginFacebookComand
+        {
+            get
+            {
+                return new RelayCommand(LoginFacebook);
             }
         }
 
@@ -217,6 +224,11 @@ namespace Lands.ViewModels
 
             this.Email = string.Empty;
             this.Password = string.Empty;
+        }
+
+        private async void LoginFacebook()
+        {
+            await Application.Current.MainPage.Navigation.PushAsync(new LoginFacebookPage());
         }
 
         #endregion
