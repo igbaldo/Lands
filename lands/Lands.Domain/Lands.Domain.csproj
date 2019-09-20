@@ -55,7 +55,10 @@
     <Compile Include="FacebookResponse.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="GroupTeam.cs" />
+    <Compile Include="Match.cs" />
+    <Compile Include="MatchesMap.cs" />
     <Compile Include="Response.cs" />
+    <Compile Include="StatusMatch.cs" />
     <Compile Include="Team.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

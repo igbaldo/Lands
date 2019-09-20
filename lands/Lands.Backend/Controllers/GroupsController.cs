@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -35,6 +36,12 @@ namespace Lands.Backend.Controllers
             {
                 return HttpNotFound();
             }
+
+            foreach (var match in group.Matches)
+            {
+                match.DateTime = match.DateTime.ToLocalTime();
+            }
+
             return View(group);
         }
 
@@ -171,7 +178,6 @@ namespace Lands.Backend.Controllers
             return View(groupTeam);
         }
 
-
         public async Task<ActionResult> DeleteTeam(int id)
         {
             GroupTeam groupTeam = await db.GroupTeams.FindAsync(id);
@@ -185,6 +191,70 @@ namespace Lands.Backend.Controllers
             await db.SaveChangesAsync();
 
             return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> AddMatch(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Group group = await db.Groups.FindAsync(id);
+
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
+
+            var match = new Match()
+            {
+                GroupId = group.GroupId,
+                DateTime = DateTime.Today
+            };
+
+            var teams = await this.GetTeamsGroup(group);
+            ViewBag.LocalId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name");
+            ViewBag.VisitorId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name");
+
+            return View(match);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddMatch(Match match)
+        {
+            if (ModelState.IsValid)
+            {
+                match.StatusMatchId = 1;
+                match.DateTime = match.DateTime.ToUniversalTime();
+
+                db.Matches.Add(match);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            var group = await db.Groups.FindAsync(match.GroupId);
+            var teams = await this.GetTeamsGroup(group);
+
+            ViewBag.LocalId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name", match.LocalId);
+            ViewBag.VisitorId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name", match.VisitorId);
+
+            return RedirectToAction(String.Format("Details/{0}", group.GroupId));
+        }
+
+        private async Task<List<Team>> GetTeamsGroup(Group group)
+        {
+            var teams = new List<Team>();
+            foreach (var item in group.GroupTeams)
+            {
+                var team = await db.Teams.FindAsync(item.TeamId);
+                if (team != null)
+                {
+                    teams.Add(team);
+                }
+            }
+
+            return teams;
         }
     }
 }

@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Lands.Domain.Match>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Group.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Local.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StatusMatch.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Visitor.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocalGoals)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VisitorGoals)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateTime)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Group.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Local.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StatusMatch.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Visitor.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocalGoals)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VisitorGoals)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateTime)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MatchId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MatchId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MatchId })
+        </td>
+    </tr>
+}
+
+</table>

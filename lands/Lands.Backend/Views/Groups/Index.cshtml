@@ -17,6 +17,12 @@
         <th>
             # Teams
         </th>
+        <th>
+            # Matches No Started
+        </th>
+        <th>
+            # Matches Close
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -26,6 +32,18 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.GroupTeams.Count)
+        </td>
+        <td>
+            @{
+                int MatchesNoStarted = item.Matches.Count(x => x.StatusMatchId == 1);
+            }
+            @MatchesNoStarted
+        </td>
+        <td>
+            @{
+                int MatchesClosed = item.Matches.Count(x => x.StatusMatchId != 1);
+            }
+            @MatchesClosed
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.GroupId }, new { @class = "btn btn-warning" })
