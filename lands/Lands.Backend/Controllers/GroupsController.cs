@@ -175,6 +175,12 @@ namespace Lands.Backend.Controllers
         public async Task<ActionResult> DeleteTeam(int id)
         {
             GroupTeam groupTeam = await db.GroupTeams.FindAsync(id);
+
+            if (groupTeam == null)
+            {
+                return HttpNotFound();
+            }
+
             db.GroupTeams.Remove(groupTeam);
             await db.SaveChangesAsync();
 
