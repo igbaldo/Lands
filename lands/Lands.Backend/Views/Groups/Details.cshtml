@@ -127,6 +127,9 @@ else
                 @Html.DisplayFor(modelItem => item.VisitorGoals)
             </td>
             <td>
+                @Html.ActionLink("Edit", "EditMatch", new { id = item.MatchId }, new { @class = "btn btn-warning"})
+            </td>
+            <td>
                 @Html.ActionLink("Delete", "DeleteMatch", new { id = item.MatchId }, new { @class = "btn btn-danger", onclick = "return confirm('Are you sure?')" })
             </td>
         </tr>

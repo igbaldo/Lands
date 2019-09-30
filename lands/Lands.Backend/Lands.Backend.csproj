@@ -282,6 +282,7 @@
     <Content Include="Views\Matches\Edit.cshtml" />
     <Content Include="Views\Matches\Index.cshtml" />
     <Content Include="Views\Groups\AddMatch.cshtml" />
+    <Content Include="Views\Groups\EditMatch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

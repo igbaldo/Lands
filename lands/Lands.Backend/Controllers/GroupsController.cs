@@ -256,5 +256,28 @@ namespace Lands.Backend.Controllers
 
             return teams;
         }
+
+        public async Task<ActionResult> EditMatch(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Match match = await db.Matches.FindAsync(id);
+            if (match == null)
+            {
+                return HttpNotFound();
+            }
+
+            var group = await db.Groups.FindAsync(match.GroupId);
+            var teams = await this.GetTeamsGroup(group);
+
+            ViewBag.LocalId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name", match.LocalId);
+            ViewBag.VisitorId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name", match.VisitorId);
+
+
+            return View(match);
+        }
     }
 }
