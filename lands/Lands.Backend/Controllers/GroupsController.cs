@@ -230,7 +230,7 @@ namespace Lands.Backend.Controllers
 
                 db.Matches.Add(match);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction(String.Format("Details/{0}", match.GroupId));
             }
 
             var group = await db.Groups.FindAsync(match.GroupId);
@@ -239,7 +239,7 @@ namespace Lands.Backend.Controllers
             ViewBag.LocalId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name", match.LocalId);
             ViewBag.VisitorId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name", match.VisitorId);
 
-            return RedirectToAction(String.Format("Details/{0}", group.GroupId));
+            return RedirectToAction("Index");
         }
 
         private async Task<List<Team>> GetTeamsGroup(Group group)
@@ -270,6 +270,7 @@ namespace Lands.Backend.Controllers
                 return HttpNotFound();
             }
 
+            match.DateTime = match.DateTime.ToLocalTime();
             var group = await db.Groups.FindAsync(match.GroupId);
             var teams = await this.GetTeamsGroup(group);
 
@@ -278,6 +279,45 @@ namespace Lands.Backend.Controllers
 
 
             return View(match);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditMatch(Match match)
+        {
+            if (ModelState.IsValid)
+            {
+                match.DateTime = match.DateTime.ToUniversalTime();
+
+                db.Entry(match).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction(String.Format("Details/{0}", match.GroupId));
+            }
+
+            var group = await db.Groups.FindAsync(match.GroupId);
+            var teams = await this.GetTeamsGroup(group);
+
+            ViewBag.LocalId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name", match.LocalId);
+            ViewBag.VisitorId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name", match.VisitorId);
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> DeleteMatch(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Match match = await db.Matches.FindAsync(id);
+            if (match == null)
+            {
+                return HttpNotFound();
+            }
+
+            db.Matches.Remove(match);
+            await db.SaveChangesAsync();
+            return RedirectToAction(String.Format("Details/{0}", match.GroupId));
         }
     }
 }
