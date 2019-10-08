@@ -73,5 +73,11 @@ namespace Lands.Domain
         [NotMapped]
         public string Password { get; set; }
 
+        [JsonIgnore]
+        public virtual ICollection<Board> Boards { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<Prediction> Predictions { get; set; }
+
     }
 }

@@ -16,6 +16,9 @@ namespace Lands.Domain
         public DbSet<GroupTeam> GroupTeams { get; set; }
         public DbSet<StatusMatch> StatusMatches { get; set; }
         public DbSet<Match> Matches { get; set; }
+        public DbSet<BoardStatus> BoardStatus { get; set; }
+        public DbSet<Board> Boards { get; set; }
+        public DbSet<Prediction> Predictions { get; set; }
 
         #endregion
 

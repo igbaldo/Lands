@@ -44,6 +44,9 @@ namespace Lands.Domain
 
         [JsonIgnore]
         public virtual StatusMatch StatusMatch { get; set; }
-        
+
+        [JsonIgnore]
+        public virtual ICollection<Prediction> Predictions { get; set; }
+
     }
 }
